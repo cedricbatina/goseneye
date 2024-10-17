@@ -1,0 +1,23 @@
+# Active la réécriture d'URL
+RewriteEngine On
+
+# Assure que les fichiers et dossiers existants sont directement accessibles
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirige toutes les autres requêtes vers l'index de Nuxt
+RewriteRule ^ / [QSA,L]
+
+# Bloque l'accès aux fichiers sensibles
+<Files .env>
+    order allow,deny
+    deny from all
+</Files>
+
+<Files .htaccess>
+    order allow,deny
+    deny from all
+</Files>
+
+# Protection contre les explorations de répertoires
+Options -Indexes
