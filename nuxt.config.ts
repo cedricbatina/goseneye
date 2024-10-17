@@ -42,10 +42,10 @@ export default defineNuxtConfig({
     NUXT_HOST: '0.0.0.0',  // Utiliser deux-points ici
     NUXT_PORT: 4000,       // Utiliser deux-points ici
     // Variables privées (côté serveur seulement)
-    dbHost: process.env.DB_HOST || "localhost",
-    dbUser: process.env.DB_USER || "root",
-    dbPassword: process.env.DB_PASSWORD || "",
-    dbName: process.env.DB_NAME || "test_db",
+    dbHost: process.env.DB_HOST || 'localhost', // Valeur par défaut pour le développement
+    dbUser: process.env.DB_USER || 'cedricbatina',
+    dbPassword: process.env.DB_PASSWORD || 'Elijahbatina2008',
+    dbName: process.env.DB_NAME || 'goseneye',
 
     smtpHost: process.env.SMTP_HOST,
     smtpPort: process.env.SMTP_PORT,
