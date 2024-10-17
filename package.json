@@ -9,7 +9,7 @@
     "preview": "nuxt preview",
     "generate-category-slugs": "node scripts/generate-category-slugs.js",
     "postinstall": "nuxt prepare",
-    "start": "node .output/server/index.mjs"  // Ajout du script de démarrage
+    "start": "node .output/server/index.mjs"  
   },
   "dependencies": {
     "@algolia/client-search": "^5.8.1",
