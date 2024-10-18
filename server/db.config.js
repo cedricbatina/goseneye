@@ -35,6 +35,7 @@ export async function getConnection() {
 
   // Configurer les paramètres de la base de données
   const dbConfig = {
+    socketPath: config.dbHost, // Utiliser le socket Unix
     user: config.dbUser,
     password: config.dbPassword,
     database: config.dbName,

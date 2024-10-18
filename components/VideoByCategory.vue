@@ -29,7 +29,7 @@
 
     <!-- Message if no categories are available -->
     <div v-else>
-      <p>Aucune catégorie disponible.</p>
+      <p class="text-center text-white">Aucune catégorie disponible.</p>
     </div>
   </div>
 </template>

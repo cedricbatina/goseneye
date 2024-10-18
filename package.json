@@ -9,7 +9,7 @@
     "preview": "nuxt preview",
     "generate-category-slugs": "node scripts/generate-category-slugs.js",
     "postinstall": "nuxt prepare",
-    "start": "node .output/server/index.mjs"  
+    "start": "node .output/server/index.mjs"
   },
   "dependencies": {
     "@algolia/client-search": "^5.8.1",
@@ -17,6 +17,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@nuxthub/core": "^0.7.33",
     "@nuxtjs/sitemap": "^6.1.1",
     "@pinia/nuxt": "^0.5.5",
     "axios": "^1.7.7",
