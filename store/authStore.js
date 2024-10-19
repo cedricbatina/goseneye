@@ -58,7 +58,6 @@ export const useAuthStore = defineStore("auth", {
   },
 });
 */
-
 import { defineStore } from "pinia";
 import { useCookie } from "#app"; // Utiliser cookies
 
@@ -68,8 +67,8 @@ export const useAuthStore = defineStore("auth", {
     token: null,
   }),
   getters: {
-    isLoggedIn: (state) => !!state.user,
-    isAdmin: (state) => state.user?.role_id === 1, // Vérifier si l'utilisateur est admin
+    isLoggedIn: (state) => !!state.token,
+    isAdmin: (state) => state.user?.role_id === 1,
   },
   actions: {
     async login(credentials) {
@@ -84,6 +83,7 @@ export const useAuthStore = defineStore("auth", {
 
         const data = await res.json();
         if (res.ok && data.token) {
+          // Enregistrer les données dans l'état du store
           this.token = data.token;
           this.user = data.user;
 
@@ -91,10 +91,8 @@ export const useAuthStore = defineStore("auth", {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
 
-          // Stocker dans les cookies
-          const tokenCookie = useCookie("auth_token");
+          // Stocker dans les cookies uniquement pour la redondance
           const userCookie = useCookie("auth_user");
-          tokenCookie.value = data.token;
           userCookie.value = JSON.stringify(data.user);
         } else {
           throw new Error(data.error || "Erreur lors de la connexion");
@@ -105,6 +103,7 @@ export const useAuthStore = defineStore("auth", {
     },
 
     logout() {
+      // Réinitialiser l'état du store
       this.user = null;
       this.token = null;
 
@@ -113,33 +112,18 @@ export const useAuthStore = defineStore("auth", {
       localStorage.removeItem("user");
 
       // Supprimer des cookies
-      const tokenCookie = useCookie("auth_token");
       const userCookie = useCookie("auth_user");
-      tokenCookie.value = null;
       userCookie.value = null;
     },
 
     hydrateUserFromLocalStorage() {
-      // Vérifier localStorage
+      // Récupérer l'utilisateur et le token du localStorage
       const token = localStorage.getItem("token");
       const user = localStorage.getItem("user");
 
       if (token && user) {
         this.token = token;
         this.user = JSON.parse(user);
-      } else {
-        // Utiliser les cookies si localStorage est vide
-        this.hydrateUserFromCookies();
-      }
-    },
-
-    hydrateUserFromCookies() {
-      const tokenCookie = useCookie("auth_token");
-      const userCookie = useCookie("auth_user");
-
-      if (tokenCookie.value && userCookie.value) {
-        this.token = tokenCookie.value;
-        this.user = JSON.parse(userCookie.value);
       }
     },
   },

@@ -49,6 +49,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "~/store/authStore";
+import { useNuxtApp } from "#app";
+const { $setCookie, $getCookie, $removeCookie } = useNuxtApp();
 
 // Données du formulaire
 const email = ref("");
@@ -78,6 +80,8 @@ const loginUser = async () => {
       message.value = data.error;
       messageType.value = "error";
     } else {
+      // Utiliser js-cookie pour stocker certaines informations de l'utilisateur côté client
+      setCookie("username", data.user.username);
       authStore.user = data.user;
       authStore.token = data.token;
       message.value = "Connexion réussie !";

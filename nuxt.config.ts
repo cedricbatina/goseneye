@@ -4,13 +4,15 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
 
+
   // Ajout des plugins nécessaires
   plugins: [
-    { src: '~/plugins/vue-carousel-client.js', mode: 'client' },
-    '~/plugins/pinia.js',  // Assurer que Pinia est correctement initialisé
+    { src: '~/plugins/vue-carousel-client.js', mode: 'client' }, { src: '~/plugins/redirect.js', mode: 'client' },
+    '~/plugins/cookies.js',  // Assurer que Pinia est correctement initialisé
     '~/plugins/auth.js',      // Ton plugin d'authentification
     '~/plugins/google-analytics.client.js' // Plugin Google Analytics
   ],
+
   css: [
     '~/assets/css/main.css',
     // '~/assets/css/home-page-style.css',
@@ -21,7 +23,7 @@ export default defineNuxtConfig({
   build: {
     transpile: [],
   },
-  modules: ['vue3-carousel-nuxt', '@nuxtjs/sitemap'],
+  modules: ['vue3-carousel-nuxt', '@nuxtjs/sitemap', '@pinia/nuxt'],
   sitemap: {
     // Configuration du sitemap
   },
@@ -39,8 +41,8 @@ export default defineNuxtConfig({
     public: {
       googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID || '', // Identifiant Google Analytics depuis le .env
     },
-    NUXT_HOST: '0.0.0.0',  // Utiliser deux-points ici
-    NUXT_PORT: 4000,       // Utiliser deux-points ici
+    // NUXT_HOST: '0.0.0.0',  // Utiliser deux-points ici
+    // NUXT_PORT: 4000,       // Utiliser deux-points ici
     // Variables privées (côté serveur seulement)
     dbHost: process.env.DB_HOST || 'localhost', // Valeur par défaut pour le développement
     dbUser: process.env.DB_USER || 'cedricbatina',

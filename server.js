@@ -1,4 +1,4 @@
-import { createServer } from "http";
+/*import { createServer } from "http";
 import { fromNodeMiddleware } from "h3";
 import { useRuntimeConfig } from "#internal/nitro";
 import { createApp } from "#internal/nitro/entry";
@@ -18,3 +18,4 @@ const server = createServer(fromNodeMiddleware(app));
 server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+*/

@@ -71,6 +71,9 @@ import { useAuthStore } from "~/store/authStore";
 import { useRouter } from "vue-router";
 import { useCookie } from "#imports"; // Importation des cookies
 
+definePageMeta({
+  middleware: "redirect",
+});
 const authStore = useAuthStore();
 const router = useRouter();
 

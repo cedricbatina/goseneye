@@ -27,18 +27,17 @@ export async function getConnection() {
 }
 */
 import mysql from "mysql2/promise";
-import { useRuntimeConfig } from "#imports"; // Import pour accéder à runtimeConfig
+import dotenv from "dotenv";
+dotenv.config(); // Charger les variables d'environnement du fichier .env
 
 // Fonction pour obtenir une connexion à la base de données
 export async function getConnection() {
-  const config = useRuntimeConfig(); // Récupérer les configurations depuis nuxt.config.ts
-
   // Configurer les paramètres de la base de données
   const dbConfig = {
-    socketPath: config.dbHost, // Utiliser le socket Unix
-    user: config.dbUser,
-    password: config.dbPassword,
-    database: config.dbName,
+    host: process.env.DB_HOST, // Utiliser les variables d'environnement du fichier .env
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
@@ -46,9 +45,7 @@ export async function getConnection() {
 
   // Si on est en production, utiliser socketPath pour Google Cloud SQL
   if (process.env.NODE_ENV === "production") {
-    dbConfig.socketPath = `/cloudsql/${config.dbHost}`; // Utiliser le socket Unix pour Cloud SQL
-  } else {
-    dbConfig.host = config.dbHost; // Utiliser `host` pour le développement local
+    dbConfig.socketPath = `/cloudsql/${process.env.DB_HOST}`; // Utiliser le socket Unix pour Cloud SQL
   }
 
   try {
