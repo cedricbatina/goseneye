@@ -1,4 +1,4 @@
-import mysql from "mysql2/promise";
+/*import mysql from "mysql2/promise";
 import { useRuntimeConfig } from "#imports"; // Import pour accéder à runtimeConfig
 
 // Fonction pour obtenir une connexion à la base de données
@@ -25,8 +25,8 @@ export async function getConnection() {
     console.error("Failed to connect to the database:", error); // Log si la connexion échoue
     throw error; // Relancer l'erreur pour la gestion des exceptions
   }
-}
-/*
+}*/
+
 import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 dotenv.config(); // Charger les variables d'environnement du fichier .env
@@ -58,4 +58,3 @@ export async function getConnection() {
     throw error; // Relancer l'erreur pour la gestion des exceptions
   }
 }
-*/
