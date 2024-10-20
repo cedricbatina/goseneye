@@ -3,4 +3,4 @@ Disallow: /admin/
 Disallow: /profile/
 
 
-gcloud sql import sql goseneye gs://your-bucket-name/your-file.sql --database=goseneye
+
