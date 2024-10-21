@@ -1,6 +1,6 @@
 <template>
   <div class="homepage-container">
-    <div class="video-section" v-if="videoSrc">
+    <div class="video-section m-5" v-if="videoSrc">
       <div class="video-wrapper">
         <iframe
           id="youtube-player"
