@@ -7,11 +7,12 @@ export default defineNuxtConfig({
 
   // Ajout des plugins nécessaires
   plugins: [
-    { src: '~/plugins/vue-carousel-client.js', mode: 'client' }, { src: '~/plugins/redirect.js', mode: 'client' },
+    { src: '~/plugins/vue-carousel-client.js', mode: 'client' },
     '~/plugins/cookies.js',  // Assurer que Pinia est correctement initialisé
     '~/plugins/auth.js',      // Ton plugin d'authentification
     '~/plugins/google-analytics.client.js' // Plugin Google Analytics
   ],
+
 
   css: [
     '~/assets/css/main.css',

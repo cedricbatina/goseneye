@@ -7,6 +7,7 @@
           class="youtube-video"
           :src="videoSrc"
           frameborder="0"
+          loading="lazy"
           allow="autoplay; encrypted-media"
           allowfullscreen
         ></iframe>
@@ -83,6 +84,7 @@
           ></i>
         </div>
       </button>
+
       <p class="text-center">
         <nuxt-link to="/contact" class="contact-button btn btn-primary">
           Prendre rendez-vous
@@ -158,6 +160,12 @@ const videoSrc = computed(() => {
 
 // Utiliser useHead pour définir le titre et les balises meta
 useHead(() => {
+  link: [
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap",
+    },
+  ];
   const title = "Accueil - Gosen'Eye | Réalisons votre vision";
   const description =
     "Réalisons votre vision en découvrant les dernières réalisations de Gosen'Eye, vidéaste professionnel spécialisé dans la capture de moments inoubliables.";
@@ -193,9 +201,6 @@ useHead(() => {
 });
 </script>
 
-<style scoped>
-/* Votre code CSS existant */
-</style>
 
 <style scoped>
 /* Design noir et or avec une grille pour la vidéo principale */
@@ -217,7 +222,7 @@ h1 {
 .video-section {
   position: relative;
   width: 100%;
-  height: 100vh; /* Pleine hauteur de l'écran */
+  height: 80vh; /* Pleine hauteur de l'écran */
   overflow: hidden; /* Masquer tout dépassement */
 }
 
@@ -228,7 +233,7 @@ h1 {
   width: 100%;
   height: 100%;
 }
-
+/*
 .youtube-video {
   position: absolute;
   top: 0;
@@ -236,7 +241,17 @@ h1 {
   width: 100%;
   height: 100%;
   border: none;
-  object-fit: cover; /* Pour que la vidéo occupe tout l'espace sans bandes noires */
+  object-fit: cover; 
+}*/
+.youtube-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 400px; /* Fixer une hauteur minimale */
+  border: none;
+  object-fit: cover;
 }
 
 /* Section pour la description sous la vidéo */
@@ -268,12 +283,13 @@ h1 {
 
 .button-content {
   display: flex;
-  flex-direction: column; /* Empile les éléments verticalement */
+  flex-direction: column; /* Icône en dessous du texte par défaut */
   align-items: center;
+  transition: flex-direction 0.3s ease; /* Transition fluide pour le changement d'ordre */
 }
 
 .button-content.expanded {
-  flex-direction: column-reverse; /* Inverse l'ordre des éléments */
+  flex-direction: column-reverse; /* Inverse l'ordre pour mettre l'icône au-dessus du texte */
 }
 
 .button-content span {
@@ -282,12 +298,8 @@ h1 {
 
 .button-content i {
   font-size: 16px;
-  margin-top: 5px; /* Espacement entre le texte et l'icône */
-}
-
-.button-content.expanded i {
-  margin-top: 0;
-  margin-bottom: 5px;
+  margin-top: 5px;
+  transition: transform 0.3s ease;
 }
 
 .toggle-button:hover {

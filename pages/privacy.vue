@@ -155,6 +155,12 @@
 import { useHead } from "#imports"; // Utiliser useHead pour SEO
 
 useHead(() => {
+  link: [
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap",
+    },
+  ];
   const title = "Mentions Légales | Gosen'Eye";
   const description =
     "Découvrez les mentions légales et engagements de Gosen'Eye, société spécialisée dans la production vidéo à Bordeaux.";

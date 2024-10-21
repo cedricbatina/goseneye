@@ -45,6 +45,12 @@ useHead({
       content: "https://www.goseneye.com/public/images/signature.png",
     },
   ],
+  link: [
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap",
+    },
+  ],
 });
 
 // Hydrater l'utilisateur depuis le store

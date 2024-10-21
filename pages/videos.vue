@@ -103,6 +103,12 @@ const toggleClosingText = () => {
 
 // Utiliser useHead pour définir le titre et les balises meta
 useHead(() => {
+  link: [
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap",
+    },
+  ];
   const title = "Vidéos - Gosen'Eye | Découvrez nos dernières réalisations";
   const description =
     "Parcourez toutes les vidéos postées par Gosen'Eye. Découvrez nos dernières productions et plongez-vous dans l'univers de la vidéo créative.";
