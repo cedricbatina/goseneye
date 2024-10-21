@@ -42,12 +42,8 @@ export async function getConnection() {
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
+    port: process.env.DB_PORT || 3306, // Ajout du port (optionnel, par défaut 3306)
   };
-
-  // Si on est en production, utiliser socketPath pour Google Cloud SQL
-  if (process.env.NODE_ENV === "production") {
-    dbConfig.socketPath = `/cloudsql/${process.env.DB_HOST}`; // Utiliser le socket Unix pour Cloud SQL
-  }
 
   try {
     const connection = await mysql.createConnection(dbConfig);
