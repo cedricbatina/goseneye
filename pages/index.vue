@@ -1,51 +1,28 @@
 <template>
   <div class="homepage-container">
-    <div class="video-section m-5" v-if="videoSrc">
-      <div class="video-wrapper">
-        <iframe
-          id="youtube-player"
-          class="youtube-video"
-          :src="videoSrc"
-          frameborder="0"
-          loading="lazy"
-          allow="autoplay; encrypted-media"
-          allowfullscreen
-        ></iframe>
-      </div>
-    </div>
-
-    <!-- Afficher un message si aucune vidéo n'est disponible -->
-    <div v-else class="no-video">
-      <p>Aucune vidéo disponible pour le moment.</p>
-    </div>
-
-    <!-- Description de la vidéo sous la vidéo -->
-    <div class="description-section" v-if="video">
-      <p class="video-excerpt">{{ truncatedDescription }}</p>
-      <button @click="toggleDescription" class="toggle-button">
-        <div
-          class="button-content"
-          :class="{ expanded: isDescriptionExpanded }"
-        >
-          <span>{{ isDescriptionExpanded ? "Voir moins" : "Voir plus" }}</span>
-          <i
-            :class="
-              isDescriptionExpanded
-                ? 'fas fa-chevron-up'
-                : 'fas fa-chevron-down'
-            "
-          ></i>
-        </div>
-      </button>
-    </div>
+    <!-- Composant LatestVideo -->
+    <section class="video-container">
+      <LatestVideo />
+    </section>
 
     <!-- Section des vidéos par catégorie -->
-    <VideoByCategory />
-    <HomeCategoryVideoButtons />
-    <SearchVideoForm />
-    <AdminButtons />
+    <section class="category-container">
+      <VideoByCategory />
+      <HomeCategoryVideoButtons />
+    </section>
+
+    <!-- Formulaire de recherche vidéo -->
+    <section class="search-container">
+      <SearchVideoForm />
+    </section>
+
+    <!-- Section des boutons administratifs -->
+    <section class="admin-container">
+      <AdminButtons />
+    </section>
+
     <!-- Texte de clôture -->
-    <div class="mt-5 p-4 description-section">
+    <section class="closing-text-container mt-5 p-4">
       <p class="video-excerpt">
         Chez <strong>Gosen'Eye</strong>, nous allons au-delà de la simple
         capture de vidéos : nous élaborons des récits visuels authentiques et
@@ -90,82 +67,28 @@
           Prendre rendez-vous
         </nuxt-link>
       </p>
-    </div>
+    </section>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watchEffect } from "vue";
-import { useAsyncData, useHead } from "#imports"; // Importer useHead
+import { ref } from "vue";
+import { useHead } from "#imports"; // Importation de useHead pour le SEO
+import LatestVideo from "~/components/LatestVideo.vue";
 import VideoByCategory from "~/components/VideoByCategory.vue";
+import HomeCategoryVideoButtons from "~/components/HomeCategoryVideoButtons.vue";
+import SearchVideoForm from "~/components/SearchVideoForm.vue";
+import AdminButtons from "~/components/AdminButtons.vue";
 
-// Variables pour l'état de la description
-const isDescriptionExpanded = ref(false);
+// Variables pour l'état de la description de clôture
 const isClosingTextExpanded = ref(false);
 
 const toggleClosingText = () => {
   isClosingTextExpanded.value = !isClosingTextExpanded.value;
 };
 
-// Fonction pour extraire l'ID de la vidéo YouTube
-const getYoutubeVideoId = (url) => {
-  const regex =
-    /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?\/)|.*[?&]v=)|youtu\.be\/)([^\s&?]+)/;
-  const match = url.match(regex);
-  return match && match[1] ? match[1] : "";
-};
-
-// Utilisation de useAsyncData pour récupérer la vidéo
-const { data: videoData, error } = useAsyncData("latestVideo", () =>
-  $fetch("/api/get-latest-video")
-);
-
-// Vérifier les erreurs
-if (error.value) {
-  console.error("Erreur lors de la récupération de la vidéo:", error.value);
-}
-
-// Déclarer 'video' comme ref réactive
-const video = ref(null);
-
-// Mettre à jour 'video' lorsque 'videoData' change
-watchEffect(() => {
-  video.value = videoData.value?.video || null;
-});
-
-// Computed property pour la description tronquée
-const truncatedDescription = computed(() => {
-  if (!video.value || !video.value.description) return "";
-  if (video.value.description.length <= 200 || isDescriptionExpanded.value) {
-    return video.value.description;
-  } else {
-    return video.value.description.substring(0, 200) + "...";
-  }
-});
-
-// Fonction pour basculer la description
-const toggleDescription = () => {
-  isDescriptionExpanded.value = !isDescriptionExpanded.value;
-};
-
-// Générer l'URL de la vidéo YouTube
-const videoSrc = computed(() => {
-  if (!video.value || !video.value.youtube_url) return "";
-  const videoId = getYoutubeVideoId(video.value.youtube_url);
-  if (!videoId) return "";
-  return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&controls=1`;
-});
-
-// ---- Ajout pour le SEO ----
-
-// Utiliser useHead pour définir le titre et les balises meta
+// ---- Ajout pour le SEO avec useHead ----
 useHead(() => {
-  link: [
-    {
-      rel: "stylesheet",
-      href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap",
-    },
-  ];
   const title = "Accueil - Gosen'Eye | Réalisons votre vision";
   const description =
     "Réalisons votre vision en découvrant les dernières réalisations de Gosen'Eye, vidéaste professionnel spécialisé dans la capture de moments inoubliables.";
@@ -197,67 +120,47 @@ useHead(() => {
         content: "https://www.goseneye.com/public/images/signature.png",
       }, // Remplacez par le chemin de votre image
     ],
+    link: [
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap",
+      },
+    ],
   };
 });
 </script>
 
-
 <style scoped>
-/* Design noir et or avec une grille pour la vidéo principale */
-.home-page {
+/* Style global */
+.homepage-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
   background-color: #000;
-  color: #f8c471; /* Or */
-  min-height: 100vh;
-  padding-top: 20px;
-}
-
-h1 {
   color: #f8c471;
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  margin-bottom: 20px;
 }
 
-/* Section pour la vidéo de mariage en plein écran */
-.video-section {
-  position: relative;
-  width: 100%;
-  height: 80vh; /* Pleine hauteur de l'écran */
-  overflow: hidden; /* Masquer tout dépassement */
+/* Vidéo */
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
 }
 
-.video-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-/*
-.youtube-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  object-fit: cover; 
-}*/
-.youtube-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 400px; /* Fixer une hauteur minimale */
-  border: none;
-  object-fit: cover;
+/* Catégorie et autres sections */
+.category-container,
+.search-container,
+.admin-container,
+.closing-text-container {
+  margin: 20px 0;
+  padding: 20px;
 }
 
-/* Section pour la description sous la vidéo */
+/* Description */
 .description-section {
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.8); /* Fond semi-transparent */
+  background-color: rgba(0, 0, 0, 0.8);
   padding: 20px;
 }
 
@@ -265,31 +168,34 @@ h1 {
   font-size: 18px;
   color: #f1f1f1;
 }
-/* Bouton "Voir plus" / "Voir moins" */
 
+/* Boutons */
 .toggle-button {
   background-color: transparent;
   border: none;
   color: #f8c471;
   cursor: pointer;
   font-size: 16px;
-  text-decoration: none; /* Retirer le soulignement */
+  text-decoration: none;
   margin-top: 10px;
-  display: inline-flex; /* Utiliser inline-flex pour permettre le centrage */
-  flex-direction: column; /* Empiler les éléments verticalement */
+  display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  text-align: center; /* Assure que le texte du bouton est centré */
+  width: 100%; /* Prend la largeur du parent pour faciliter le centrage */
 }
 
 .button-content {
   display: flex;
-  flex-direction: column; /* Icône en dessous du texte par défaut */
+  flex-direction: column;
   align-items: center;
-  transition: flex-direction 0.3s ease; /* Transition fluide pour le changement d'ordre */
+  transition: flex-direction 0.3s ease;
 }
 
 .button-content.expanded {
-  flex-direction: column-reverse; /* Inverse l'ordre pour mettre l'icône au-dessus du texte */
+  flex-direction: column-reverse;
 }
 
 .button-content span {
@@ -302,37 +208,10 @@ h1 {
   transition: transform 0.3s ease;
 }
 
-.toggle-button:hover {
-  color: #f8a471;
-}
-
-/* Message lorsqu'aucune vidéo n'est disponible */
 .no-video {
   text-align: center;
   padding: 50px 0;
   font-size: 18px;
-}
-
-.closing-section {
-  background-color: rgba(0, 0, 0, 0.85); /* Fond noir avec transparence */
-  color: #f8c471; /* Texte doré */
-  padding: 40px;
-  text-align: center;
-  font-size: 18px;
-  line-height: 1.6;
-  max-width: 800px;
-  margin: 40px auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.closing-section p {
-  margin-bottom: 20px;
-  color: #f1f1f1; /* Texte blanc cassé pour améliorer la lisibilité */
-}
-
-.closing-section strong {
-  color: #f8c471; /* Doré plus éclatant */
 }
 
 .contact-button {
@@ -351,32 +230,21 @@ h1 {
 }
 
 /* --- Media Queries for Responsiveness --- */
-
-/* Pour les écrans de moins de 768px (tablettes et mobiles) */
 @media (max-width: 768px) {
-  .video-section {
-    height: 60vh; /* Réduire la hauteur de la vidéo sur les petits écrans */
-  }
-
-  .youtube-video {
-    height: 60vh; /* Adapter la hauteur de la vidéo */
-  }
-
-  .description-section {
+  .video-container,
+  .category-container,
+  .search-container,
+  .admin-container,
+  .closing-text-container {
     padding: 10px;
   }
 
-  .video-excerpt {
-    font-size: 16px; /* Réduire la taille du texte */
-  }
-
   .toggle-button {
-    font-size: 14px; /* Réduire la taille du bouton */
+    font-size: 14px;
   }
 
-  .closing-section {
+  .video-excerpt {
     font-size: 16px;
-    padding: 20px;
   }
 
   .contact-button {
@@ -384,31 +252,21 @@ h1 {
   }
 }
 
-/* Pour les très petits écrans (moins de 480px) */
 @media (max-width: 480px) {
-  .video-section {
-    height: 50vh; /* Réduire davantage la hauteur sur les petits écrans */
-  }
-
-  .youtube-video {
-    height: 50vh;
-  }
-
-  .description-section {
+  .video-container,
+  .category-container,
+  .search-container,
+  .admin-container,
+  .closing-text-container {
     padding: 5px;
-  }
-
-  .video-excerpt {
-    font-size: 14px;
   }
 
   .toggle-button {
     font-size: 12px;
   }
 
-  .closing-section {
+  .video-excerpt {
     font-size: 14px;
-    padding: 10px;
   }
 
   .contact-button {

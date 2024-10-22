@@ -27,12 +27,12 @@ import { useAuthStore } from "~/store/authStore";
 export default defineNuxtRouteMiddleware((to, from) => {
   const authStore = useAuthStore();
 
-  // Hydrater l'utilisateur à partir de localStorage ou des cookies
+  // Hydrater l'utilisateur à partir de localStorage si nécessaire
   if (!authStore.isLoggedIn) {
     authStore.hydrateUserFromLocalStorage();
   }
 
-  // Vérifie si l'utilisateur est connecté
+  // Attendre que l'hydratation soit terminée avant de vérifier l'état de connexion
   if (!authStore.isLoggedIn) {
     return navigateTo("/login"); // Redirige vers la page de connexion
   }

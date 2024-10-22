@@ -49,8 +49,6 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "~/store/authStore";
-import { useNuxtApp } from "#app";
-const { $setCookie, $getCookie, $removeCookie } = useNuxtApp();
 
 // Données du formulaire
 const email = ref("");
@@ -77,23 +75,26 @@ const loginUser = async () => {
 
     const data = await response.json();
     if (data.error) {
+      // Afficher le message d'erreur
       message.value = data.error;
       messageType.value = "error";
     } else {
-      // Utiliser js-cookie pour stocker certaines informations de l'utilisateur côté client
-      setCookie("username", data.user.username);
+      // Stocker les informations de l'utilisateur dans le store (id, role_id)
       authStore.user = data.user;
       authStore.token = data.token;
+
+      // Afficher le message de succès
       message.value = "Connexion réussie !";
       messageType.value = "success";
 
+      // Redirection en fonction du rôle de l'utilisateur
       setTimeout(() => {
         if (authStore.user.role_id === 1) {
           router.push("/admin");
         } else {
           router.push("/user/profile");
         }
-      }, 1500);
+      }, 1500); // Attendre 1,5s avant de rediriger
     }
   } catch (error) {
     message.value = "Erreur lors de la connexion";

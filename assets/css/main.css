@@ -1,23 +1,46 @@
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
-
-
 h1, h2, h3, h4, h5, h6 {
   color: #f8c471; /* Couleur dorée unifiée */
 }
+
 p {
   color: #f1f1f1f1;
 }
+
 a, button {
   color: #f8c471;
   text-decoration: none;
 }
 
-body, .homepage-container {
+body {
   background-color: #000; /* Fond noir */
- /* color: #f8c471; /* Texte doré */
-  min-height: 100vh; /* Assure que le fond couvre toute la page */
+  color: #f8c471; /* Texte doré */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Assure que le contenu reste dans les limites de la page */
+.homepage-container {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
+  background-color: #000; /* Fond noir */
+  min-height: 100vh; /* Assure que le fond couvre toute la page */
+}
+
+/* Limitation des dimensions de la vidéo */
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.video-wrapper {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Groupe de boutons pour la navigation */
@@ -25,7 +48,6 @@ body, .homepage-container {
   text-align: right;
   margin-bottom: 20px;
 }
-
 
 .btn-nav:hover {
   background-color: #cda85b;
@@ -89,6 +111,7 @@ h1 {
 .pagination button:hover {
   background-color: #cda85b;
 }
+
 .btn-edit:hover {
   background-color: #cda85b;
 }
@@ -117,6 +140,7 @@ h1 {
   margin-top: 30px;
 }
 
+/* Bouton contact */
 .contact-button {
   display: inline-block;
   padding: 12px 20px;
@@ -126,10 +150,44 @@ h1 {
   border-radius: 5px;
   text-decoration: none;
   margin: 10px;
-
 }
 
 .contact-button:hover {
   background-color: #cda85b;
-  
+}
+
+/* --- Media Queries for Responsiveness --- */
+@media (max-width: 768px) {
+  .homepage-container {
+    padding: 10px;
+  }
+
+  .video-wrapper {
+    width: 100%;
+    height: auto;
+  }
+
+  .admin-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pagination button {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .homepage-container {
+    padding: 5px;
+  }
+
+  .admin-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .pagination button {
+    padding: 6px;
+  }
 }

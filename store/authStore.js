@@ -1,5 +1,4 @@
-// store/authStore.js
-/*import { defineStore } from "pinia";
+import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
@@ -7,7 +6,7 @@ export const useAuthStore = defineStore("auth", {
     token: null,
   }),
   getters: {
-    isLoggedIn: (state) => !!state.user,
+    isLoggedIn: (state) => !!state.token, // Changer la logique : vérifier si un token est présent
     isAdmin: (state) => state.user?.role_id === 1, // Vérifie si l'utilisateur est admin
   },
   actions: {
@@ -22,15 +21,24 @@ export const useAuthStore = defineStore("auth", {
         });
 
         const data = await res.json();
-        if (res.ok && data.token) {
-          this.token = data.token;
-          this.user = data.user;
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("user", JSON.stringify(data.user)); // Stocke les infos user
-        } else {
+
+        // Vérifier si la réponse est ok ou si une erreur est survenue
+        if (!res.ok || !data.token) {
           throw new Error(data.error || "Erreur lors de la connexion");
         }
+
+        // Si tout est correct, stocker les informations
+        this.token = data.token;
+        this.user = data.user;
+
+        // Stocker dans localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        // Assurer une hydratation à jour après connexion
+        this.hydrateUserFromLocalStorage();
       } catch (error) {
+        console.error("Erreur lors de la connexion:", error.message);
         throw new Error(error.message);
       }
     },
@@ -43,8 +51,76 @@ export const useAuthStore = defineStore("auth", {
     },
 
     hydrateUserFromLocalStorage() {
-      if (import.meta.client) {
-        // Assurez-vous que cela ne s'exécute que côté client
+      if (import.meta.env.SSR === false) {
+        // Exécuter uniquement côté client
+        const token = localStorage.getItem("token");
+        if (token) {
+          this.token = token;
+          const user = JSON.parse(localStorage.getItem("user"));
+          if (user) {
+            this.user = user;
+          }
+        }
+      }
+    },
+  },
+});
+
+/*import { defineStore } from "pinia";
+
+export const useAuthStore = defineStore("auth", {
+  state: () => ({
+    user: null,
+    token: null,
+  }),
+  getters: {
+    isLoggedIn: (state) => !!state.token, // Changer la logique : vérifier si un token est présent
+    isAdmin: (state) => state.user?.role_id === 1, // Vérifie si l'utilisateur est admin
+  },
+  actions: {
+    async login(credentials) {
+      try {
+        const res = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(credentials),
+        });
+
+        const data = await res.json();
+
+        // Vérifier si la réponse est ok ou si une erreur est survenue
+        if (!res.ok || !data.token) {
+          throw new Error(data.error || "Erreur lors de la connexion");
+        }
+
+        // Si tout est correct, stocker les informations
+        this.token = data.token;
+        this.user = data.user;
+
+        // Stocker dans localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        // Assurer une hydratation à jour après connexion
+        this.hydrateUserFromLocalStorage();
+      } catch (error) {
+        console.error("Erreur lors de la connexion:", error.message);
+        throw new Error(error.message);
+      }
+    },
+
+    logout() {
+      this.user = null;
+      this.token = null;
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    },
+
+    hydrateUserFromLocalStorage() {
+      if (import.meta.env.SSR === false) {
+        // Exécuter uniquement côté client
         const token = localStorage.getItem("token");
         if (token) {
           this.token = token;
@@ -58,6 +134,7 @@ export const useAuthStore = defineStore("auth", {
   },
 });
 */
+/*
 import { defineStore } from "pinia";
 import { useCookie } from "#app"; // Utiliser cookies
 
@@ -127,4 +204,4 @@ export const useAuthStore = defineStore("auth", {
       }
     },
   },
-});
+});*/

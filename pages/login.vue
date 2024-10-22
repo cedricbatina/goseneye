@@ -48,16 +48,16 @@ useHead({
 </script>
 
 <style scoped>
-.homepage-container {
+/*.homepage-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background-color: #000; /* Fond noir pour correspondre au thème */
-  color: #f8c471; /* Texte doré pour correspondre au thème */
-  min-height: 100vh; /* Prend toute la hauteur de l'écran */
-}
+  background-color: #000; 
+  color: #f8c471;
+  min-height: 100vh;
+}*/
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
