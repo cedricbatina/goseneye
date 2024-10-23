@@ -2,16 +2,6 @@
   <div class="admin-dashboard">
     <h1 class="m-5">Tableau de Bord - Admin</h1>
 
-    <!-- Boutons de navigation -->
-    <div class="admin-buttons">
-      <nuxt-link to="/admin/video/create-video" class="btn-nav">
-        <i class="fas fa-video"></i> Créer une vidéo
-      </nuxt-link>
-      <nuxt-link to="#" class="btn-nav">
-        <i class="fas fa-user-plus"></i> Ajouter un utilisateur
-      </nuxt-link>
-    </div>
-
     <!-- Première section : Infos administratives -->
     <div class="info-section">
       <!-- Section pour l'affichage de l'heure actuelle -->
@@ -23,12 +13,25 @@
       <!-- Section pour les informations personnelles -->
       <nuxt-link to="/admin/profile" class="card-link no-underline">
         <div class="card">
+          <h1>Bonjour</h1>
           <h4><i class="fas fa-user"></i> {{ user.username }}</h4>
-          <p><strong>Email :</strong> {{ user.email }}</p>
-          <p><strong>Rôle :</strong> {{ userRole }}</p>
+          <p>
+            <strong>Votre Email est </strong>
+            <span class="user-info">{{ user.email }}</span>
+          </p>
+          <p>
+            <strong>Vous avez le rôle </strong>
+            <span class="user-info">{{ userRole }}</span>
+          </p>
+          <p></p>
+          <p>
+            <strong>Votre compte a été créé le </strong>
+            <span class="user-infos">{{ formatDate(user.created_at) }}</span>
+          </p>
         </div>
       </nuxt-link>
     </div>
+    <AdminButtons />
 
     <!-- Deuxième section : Gestion -->
     <div class="grid-container">
@@ -77,6 +80,15 @@ import { useAuthStore } from "~/store/authStore"; // Utiliser le store d'authent
 const authStore = useAuthStore();
 const user = ref(authStore.user || {});
 const userRole = ref("Utilisateur");
+const formatDate = (dateString) => {
+  if (!dateString) return ""; // Gérer les cas où la date est absente
+  const date = new Date(dateString);
+  return date.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
 
 // Définir le rôle de l'utilisateur
 onMounted(() => {

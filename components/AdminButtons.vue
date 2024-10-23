@@ -14,6 +14,10 @@
       <nuxt-link to="/admin/users" class="btn-admin">
         <i class="fas fa-users"></i> Gérer les utilisateurs
       </nuxt-link>
+      <!-- Voir les statistiques -->
+      <nuxt-link to="/admin/stats" class="btn-admin">
+        <i class="fas fa-chart-bar"></i> Voir les Statistiques
+      </nuxt-link>
       <nuxt-link to="/admin" class="btn-admin">
         <i class="fas fa-home"></i> Retour à Admin Board
       </nuxt-link>
@@ -67,6 +71,13 @@ const isAdmin = authStore.isAdmin; // Vérifier si l'utilisateur est admin
 }
 
 /* Réactivité pour les petits écrans */
+@media (max-width: 1024px) {
+  .btn-admin {
+    padding: 10px 18px;
+    font-size: 16px;
+  }
+}
+
 @media (max-width: 768px) {
   .button-group {
     flex-direction: column; /* Les boutons se mettent en colonne sur petits écrans */
@@ -79,16 +90,23 @@ const isAdmin = authStore.isAdmin; // Vérifier si l'utilisateur est admin
     width: 100%; /* Les boutons prennent toute la largeur sur petits écrans */
     max-width: 300px; /* Limiter la largeur maximale */
   }
+
+  .btn-admin i {
+    margin-right: 6px;
+  }
 }
 
 @media (max-width: 480px) {
   .btn-admin {
     padding: 8px 12px;
     font-size: 12px;
+    width: 100%; /* Les boutons prennent toute la largeur */
+    max-width: 280px; /* Limiter la largeur maximale sur très petits écrans */
   }
 
   .btn-admin i {
-    margin-right: 5px;
+    margin-right: 4px;
+    font-size: 14px; /* Réduire la taille des icônes sur les petits écrans */
   }
 }
 </style>

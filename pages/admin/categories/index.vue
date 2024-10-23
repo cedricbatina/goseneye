@@ -1,6 +1,10 @@
 <template>
   <div class="homepage-container">
     <ManageCategories />
+    <h1 class="text-center text-white">
+      Ci-dessous les catégories contenant des vidéos
+    </h1>
+    <VideoByCategory />
   </div>
 </template>
 
@@ -61,5 +65,23 @@ authStore.hydrateUserFromLocalStorage();
 <style scoped>
 .homepage-container {
   padding: 20px;
+}
+h1 {
+  font-size: 16px;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .homepage-container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .homepage-container {
+    padding: 10px;
+  }
+  h1 {
+    font-size: 14px;
+  }
 }
 </style>

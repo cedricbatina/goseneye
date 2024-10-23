@@ -125,8 +125,10 @@ export default defineEventHandler(async (event) => {
       user: {
         id: user[0].id,
         email: user[0].email,
-        username: user[0].username, // Ajoute le username ici
+        username: user[0].username,
         role_id: user[0].role_id,
+        created_at: user[0].created_at, // Ajoute la date de création
+        updated_at: user[0].updated_at, // Ajoute la date de modification
       },
     };
   } catch (error) {
