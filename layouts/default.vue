@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="homepage-container">
     <!-- Barre supérieure avec téléphone, email et réseaux sociaux -->
     <div
       class="top-bar d-flex justify-content-between align-items-center p-2 bg-black text-white"
