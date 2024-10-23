@@ -5,7 +5,7 @@
       <div class="video-wrapper">
         <iframe
           id="youtube-player"
-          class="youtube-video"
+          class="video-iframe"
           :src="videoSrc"
           frameborder="0"
           loading="lazy"
@@ -145,6 +145,11 @@ const videoSrc = computed(() => {
   max-width: 100%;
   border: none;
   object-fit: cover; /* S'assure que la vidéo couvre bien toute la surface sans déborder */
+}
+.video-iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
 }
 
 .description-section {

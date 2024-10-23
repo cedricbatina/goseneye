@@ -23,7 +23,7 @@ body {
 
 /* Assure que le contenu reste dans les limites de la page */
 .homepage-container {
-max-width: 1200px;
+max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
   background-color: #000; /* Fond noir */
