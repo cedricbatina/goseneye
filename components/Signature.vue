@@ -16,7 +16,7 @@
 }
 
 .signature-image {
-  width: 30%; /* Taille initiale de l'image */
+  width: 50%; /* Taille initiale de l'image */
   transform: scale(2); /* Augmente la taille de 1,5 fois */
   margin: 40px;
 }
