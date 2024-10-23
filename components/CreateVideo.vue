@@ -88,11 +88,7 @@
     </form>
 
     <!-- Bouton pour revenir aux vidéos par catégorie -->
-    <div class="video-category-button">
-      <nuxt-link to="/category/videoscategories" class="btn btn-secondary">
-        Retour aux vidéos par catégorie
-      </nuxt-link>
-    </div>
+    <AdminButtons />
 
     <!-- Affichage des messages de succès ou d'erreur -->
     <div v-if="message" :class="['message-box', messageType]">
@@ -199,7 +195,7 @@ const submitForm = async () => {
 
       // Redirection après la création
       setTimeout(() => {
-        router.push("/category/videocategories");
+        router.push("/admin/");
       }, 2000); // Redirection après 2 secondes
     } else {
       throw new Error(data.message || "Erreur lors de la création de la vidéo");
