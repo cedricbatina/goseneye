@@ -147,9 +147,11 @@ const videoSrc = computed(() => {
   object-fit: cover; /* S'assure que la vidéo couvre bien toute la surface sans déborder */
 }
 .video-iframe {
-  width: 100%;
-  height: 500px;
-  border: none;
+  width: 100%; /* L'iframe prend toute la largeur du parent */
+  max-width: 100%; /* Empêche l'iframe de dépasser le conteneur */
+  height: auto; /* Ajuste la hauteur automatiquement selon la largeur */
+  aspect-ratio: 16/9; /* Maintient le rapport d'aspect pour la vidéo */
+  border: none; /* Retire toute bordure indésirable */
 }
 
 .description-section {

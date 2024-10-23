@@ -134,27 +134,34 @@ useHead(() => {
 /* Style global */
 .homepage-container {
   max-width: 1200px;
+  width: 100%; /* S'assure que le conteneur s'adapte à la largeur de l'écran */
   margin: 0 auto;
   padding: 20px;
   background-color: #000;
   color: #f8c471;
+  overflow: hidden; /* Empêche le débordement de son contenu */
 }
 
 /* Vidéo */
 .video-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 40px;
+  justify-content: center; /* Centre la vidéo horizontalement */
+  align-items: center; /* Centre la vidéo verticalement */
+  width: 100%; /* S'assure que le conteneur prend toute la largeur disponible */
+  max-width: 1200px; /* Limite la largeur pour éviter les débordements */
+  margin: 0 auto 40px auto; /* Centre horizontalement le conteneur et ajoute un espace en bas */
+  overflow: hidden; /* Empêche tout débordement de la vidéo */
 }
 
-/* Catégorie et autres sections */
+/* Réduit les marges et paddings dans les sections pour éviter les débordements */
 .category-container,
 .search-container,
 .admin-container,
 .closing-text-container {
   margin: 20px 0;
   padding: 20px;
+  max-width: 100%; /* Assure que les sections ne dépassent pas la largeur du parent */
+  box-sizing: border-box; /* S'assure que les paddings n'augmentent pas la largeur des éléments */
 }
 
 /* Description */
@@ -231,14 +238,15 @@ useHead(() => {
 
 /* --- Media Queries for Responsiveness --- */
 @media (max-width: 768px) {
+  .homepage-container,
   .video-container,
   .category-container,
   .search-container,
   .admin-container,
   .closing-text-container {
     padding: 10px;
+    width: 100%;
   }
-
   .toggle-button {
     font-size: 14px;
   }

@@ -23,12 +23,14 @@ body {
 
 /* Assure que le contenu reste dans les limites de la page */
 .homepage-container {
-max-width: 1400px;
-  margin: 0 auto;
+  max-width: 1200px; /* Ajuste la largeur à une taille plus petite si nécessaire */
+  width: 100%;
+  margin: 0 auto; /* Centre le conteneur horizontalement */
   padding: 20px;
-  background-color: #000; /* Fond noir */
-  min-height: 100vh; /* Assure que le fond couvre toute la page */
+  background-color: #000;
+  min-height: 100vh;
 }
+
 
 /* Limitation des dimensions de la vidéo */
 .video-container {
