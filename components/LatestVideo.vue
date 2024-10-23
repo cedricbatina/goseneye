@@ -198,6 +198,22 @@ const videoSrc = computed(() => {
   padding: 50px 0;
   font-size: 18px;
 }
+/* Ajoute ce style global ou directement dans LatestVideo.vue */
+.video-iframe {
+  width: 100%; /* S'assure que l'iframe prend toute la largeur du conteneur */
+  max-width: 100%;
+  height: auto; /* Ajuste la hauteur automatiquement */
+  aspect-ratio: 16 / 9; /* Maintient un rapport 16:9 pour les vidéos YouTube */
+  border: none; /* Retire la bordure */
+  display: block;
+}
+
+.video-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto; /* Centre la vidéo */
+  overflow: hidden; /* Empêche tout débordement */
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -208,7 +224,10 @@ const videoSrc = computed(() => {
     width: 100%;
     height: 100%;
   }
-
+  .video-iframe {
+    height: auto; /* Permet à l'iframe de redimensionner en fonction de la largeur disponible */
+    aspect-ratio: 16 / 9; /* Maintient le rapport d'aspect */
+  }
   .video-excerpt {
     font-size: 14px; /* Réduction de la taille de la police pour les petits écrans */
   }
