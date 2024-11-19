@@ -7,7 +7,7 @@
       <!-- Section gauche avec téléphone -->
       <div class="contact-info d-flex align-items-center">
         <i class="fas fa-phone mr-2"></i>
-        <span class="contact-text">+33 6 64 53 85 26</span>
+        <span class="contact-text">+33 7 48 48 49 02</span>
       </div>
 
       <!-- Section du milieu avec les réseaux sociaux -->
@@ -18,30 +18,73 @@
       <!-- Section droite avec email -->
       <div class="contact-info d-flex align-items-center">
         <i class="fas fa-envelope mr-2"></i>
-        <span class="contact-text">gosen.eye@gmail.com</span>
+        <span class="contact-text">info@longoka.fr</span>
       </div>
     </div>
 
     <!-- Navbar et contenu principal -->
     <Navbar />
-    <NuxtPage />
+
+    <!-- Contenu principal -->
+    <main>
+      <slot />
+    </main>
+
+    <!-- Footer -->
     <Footer />
   </div>
 </template>
 
-<script>
-import Navbar from "~/components/Navbar.vue";
-import Footer from "~/components/Footer.vue";
-import SocialMedia from "~/components/SocialMedia.vue"; // Importer SocialMedia
-
-export default {
-  components: {
-    Navbar,
-    Footer,
-    SocialMedia, // Ajouter SocialMedia dans les composants
-  },
-};
+<script setup>
+import Navbar from '~/components/Navbar.vue';
+import Footer from '~/components/Footer.vue';
+import SocialMedia from '~/components/SocialMedia.vue';
 </script>
+
+<style scoped>
+.homepage-container {
+  background-color: #f9f9f9;
+}
+
+.top-bar {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.contact-text {
+  margin-left: 5px;
+}
+
+.social-media {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    text-align: center;
+  }
+  .contact-info, .social-media {
+    margin-bottom: 5px;
+  }
+}
+
+main {
+  min-height: 70vh;
+  padding: 20px;
+}
+</style>
+
 
 <style scoped>
 @import "@/assets/css/footer-style.css";

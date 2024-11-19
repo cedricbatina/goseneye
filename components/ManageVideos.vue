@@ -1,123 +1,100 @@
 <template>
-  <div class="homepage-container">
-    <!-- Composant LatestVideo -->
-    <LatestVideo />
-
-    <!-- Section des vidéos par catégorie -->
-    <VideoByCategory />
-    <HomeCategoryVideoButtons />
-    <SearchVideoForm />
+  <div class="manage-videos">
+    <!-- Boutons de navigation -->
     <AdminButtons />
 
-    <!-- Texte de clôture -->
-    <div class="mt-5 p-4 description-section">
-      <p class="video-excerpt">
-        Chez <strong>Gosen'Eye</strong>, nous allons au-delà de la simple
-        capture de vidéos : nous élaborons des récits visuels authentiques et
-        captivants. Grâce à notre expertise technique et notre passion pour
-        l'art visuel, chaque projet que nous entreprenons est unique et
-        personnalisé. Que ce soit pour un mariage, un événement d'entreprise ou
-        une production artistique, notre équipe de professionnels dévoués
-        s'engage à immortaliser chaque instant avec précision et créativité.
-        <br v-if="isClosingTextExpanded" />
-        <span v-if="isClosingTextExpanded">
-          Forts de plusieurs années d'expérience dans le domaine audiovisuel,
-          nous utilisons les technologies les plus récentes pour vous offrir des
-          vidéos de haute qualité, parfaitement adaptées à vos besoins et à vos
-          attentes. Notre objectif est clair : créer des productions qui
-          reflètent votre identité et qui laissent une empreinte mémorable.
-          <br />
-          Prêt à concrétiser vos idées ?
-          <strong>Contactez-nous dès maintenant</strong> pour discuter de votre
-          projet et planifier une rencontre. Nous sommes impatients de
-          collaborer avec vous pour transformer votre vision en réalité et créer
-          ensemble des souvenirs inoubliables.
-        </span>
-      </p>
-      <button @click="toggleClosingText" class="toggle-button">
-        <div
-          class="button-content"
-          :class="{ expanded: isClosingTextExpanded }"
-        >
-          <span>{{ isClosingTextExpanded ? "Voir moins" : "Voir plus" }}</span>
-          <i
-            :class="
-              isClosingTextExpanded
-                ? 'fas fa-chevron-up'
-                : 'fas fa-chevron-down'
-            "
-          ></i>
-        </div>
-      </button>
+    <h3 class="mb-3">Gestion des Vidéos</h3>
 
-      <p class="text-center">
-        <nuxt-link to="/contact" class="contact-button btn btn-primary">
-          Prendre rendez-vous
-        </nuxt-link>
-      </p>
+    <!-- Tableau des vidéos -->
+    <div v-if="videos.length > 0" class="video-list">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Catégorie</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="video in videos" :key="video.id">
+            <td>{{ video.id }}</td>
+            <td>{{ video.title }}</td>
+            <td>{{ video.category_name || "N/A" }}</td>
+            <td>{{ formatDate(video.created_at) }}</td>
+            <td>
+              <!-- Bouton Modifier -->
+              <nuxt-link :to="`/admin/video/edit/${video.id}`" class="btn-edit">
+                Modifier
+              </nuxt-link>
+              <!-- Bouton Supprimer -->
+              <button @click="confirmDelete(video.id)" class="btn-delete">
+                Supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div v-else>
+      <p>Aucune vidéo trouvée.</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useHead } from "#imports"; // Importation de useHead pour le SEO
-import LatestVideo from "~/components/LatestVideo.vue";
-import VideoByCategory from "~/components/VideoByCategory.vue";
-import HomeCategoryVideoButtons from "~/components/HomeCategoryVideoButtons.vue";
-import SearchVideoForm from "~/components/SearchVideoForm.vue";
-import AdminButtons from "~/components/AdminButtons.vue";
+import { ref, onMounted } from "vue";
 
-// Variables pour l'état de la description de clôture
-const isClosingTextExpanded = ref(false);
+const videos = ref([]);
 
-const toggleClosingText = () => {
-  isClosingTextExpanded.value = !isClosingTextExpanded.value;
+// Fonction pour récupérer la liste des vidéos
+const fetchVideos = async () => {
+  try {
+    const response = await fetch("/api/get-videos");
+    const data = await response.json();
+    console.log("Données reçues :", data.videos); // Vérifier les données reçues
+    videos.value = data.videos;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des vidéos", error);
+  }
 };
 
-// ---- Ajout pour le SEO avec useHead ----
-useHead(() => {
-  const title = "Accueil - Gosen'Eye | Réalisons votre vision";
-  const description =
-    "Réalisons votre vision en découvrant les dernières réalisations de Gosen'Eye, vidéaste professionnel spécialisé dans la capture de moments inoubliables.";
+// Fonction pour formater la date
+const formatDate = (dateString) => {
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Date(dateString).toLocaleDateString("fr-FR", options);
+};
 
-  return {
-    title,
-    meta: [
-      { name: "description", content: description },
-      {
-        name: "keywords",
-        content:
-          "vidéaste, professionnel, vidéo, mariage, événementiel, business, Gosen'Eye, Bordeaux, art, visuel, film, Gironde",
-      },
-      // Balises Open Graph pour le partage sur les réseaux sociaux
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://www.goseneye.com/" }, // Remplacez par l'URL de votre site
-      {
-        property: "og:image",
-        content: "https://www.goseneye.com/public/images/signature.png",
-      }, // Remplacez par le chemin de votre image
-      // Balises Twitter Card
-      { name: "twitter:title", content: title },
-      { name: "twitter:description", content: description },
-      { name: "twitter:card", content: "summary_large_image" },
-      {
-        name: "twitter:image",
-        content: "https://www.goseneye.com/public/images/signature.png",
-      }, // Remplacez par le chemin de votre image
-    ],
-    link: [
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap",
-      },
-    ],
-  };
+// Fonction pour confirmer la suppression d'une vidéo
+const confirmDelete = async (videoId) => {
+  const isConfirmed = confirm(
+    "Êtes-vous sûr de vouloir supprimer cette vidéo ?"
+  );
+
+  if (isConfirmed) {
+    // Si confirmé, appel de la fonction deleteVideo
+    deleteVideo(videoId);
+  }
+};
+
+// Fonction pour supprimer une vidéo
+const deleteVideo = async (videoId) => {
+  try {
+    await fetch(`/api/delete-video/${videoId}`, {
+      method: "DELETE",
+    });
+    // Mettre à jour la liste après suppression
+    fetchVideos();
+  } catch (error) {
+    console.error("Erreur lors de la suppression de la vidéo", error);
+  }
+};
+
+onMounted(() => {
+  fetchVideos();
 });
 </script>
-
 
 
 <style scoped>
