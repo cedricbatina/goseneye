@@ -5,35 +5,14 @@
     <SearchVideoForm />
 
     <!-- Boutons de navigation -->
-    <div class="button-group mb-5">
-      <nuxt-link to="/admin/video/create-video" class="btn btn-nav">
-        <i class="fas fa-video"></i> Créer une vidéo
-      </nuxt-link>
-      <nuxt-link to="/admin/categories" class="btn btn-nav">
-        <i class="fas fa-film"></i> Gérer les catégories
-      </nuxt-link>
-      <nuxt-link to="/admin/users" class="btn btn-nav">
-        <i class="fas fa-users"></i> Gérer les utilisateurs
-      </nuxt-link>
-      <nuxt-link to="/admin" class="btn btn-nav">
-        <i class="fas fa-home"></i> Retour à Admin Board
-      </nuxt-link>
-    </div>
+    <AdminButtons />
     <!-- Section pour les dernières vidéos paginées -->
     <div class="latest-videos-section m-4">
-      <h4 class="m-2">Toutes les vidéos</h4>
       <div v-if="loading">Chargement des vidéos...</div>
       <div v-else-if="error">{{ error }}</div>
       <div v-else>
         <!-- Utilisation du composant VideoGrid -->
-        <VideoGrid :videos="paginatedVideos" />
-
-        <!-- Pagination component -->
-        <Pagination
-          :currentPage="currentPage"
-          :totalPages="totalPages"
-          @updatePage="currentPage = $event"
-        />
+        <VideoByCategory />
       </div>
     </div>
 
@@ -44,8 +23,8 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useHead } from "#imports";
-import Pagination from "~/components/Pagination.vue";
-import VideoGrid from "~/components/VideoGrid.vue"; // Import du composant VideoGrid
+//import Pagination from "~/components/Pagination.vue";
+import VideoByCategory from "~/components/VideoByCategory.vue"; // Import du composant VideoGrid
 
 import SearchVideoForm from "~/components/SearchVideoForm.vue";
 // Appliquer le middleware à cette page
