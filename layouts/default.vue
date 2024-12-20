@@ -7,7 +7,7 @@
       <!-- Section gauche avec téléphone -->
       <div class="contact-info d-flex align-items-center">
         <i class="fas fa-phone mr-2"></i>
-        <span class="contact-text">+33 7 48 48 49 02</span>
+        <span class="contact-text">+33 6 64 53 85 26/span>
       </div>
 
       <!-- Section du milieu avec les réseaux sociaux -->
@@ -18,7 +18,7 @@
       <!-- Section droite avec email -->
       <div class="contact-info d-flex align-items-center">
         <i class="fas fa-envelope mr-2"></i>
-        <span class="contact-text">info@longoka.fr</span>
+        <span class="contact-text">gosen.eye@gmail.com</span>
       </div>
     </div>
 
