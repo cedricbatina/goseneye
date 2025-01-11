@@ -7,7 +7,7 @@
       <!-- Section gauche avec téléphone -->
       <div class="contact-info d-flex align-items-center">
         <i class="fas fa-phone mr-2"></i>
-        <span class="contact-text">+33 6 64 53 85 26/span>
+        <span class="contact-text">+33 6 64 53 85 26</span>
       </div>
 
       <!-- Section du milieu avec les réseaux sociaux -->
@@ -43,7 +43,7 @@ import SocialMedia from '~/components/SocialMedia.vue';
 
 <style scoped>
 .homepage-container {
-  background-color: #f9f9f9;
+  background-color: #000;
 }
 
 .top-bar {
@@ -80,8 +80,8 @@ import SocialMedia from '~/components/SocialMedia.vue';
 }
 
 main {
-  min-height: 70vh;
-  padding: 20px;
+  min-height: 80vh;
+  padding: 10px;
 }
 </style>
 

@@ -83,7 +83,7 @@
           Site conçu et maintenu par :
           <a
             class="footer-link"
-            href="https://www.artfulbatinacreativestudios.fr"
+            href="https://artfulbatinacreativestudios.fr"
             target="_blank"
             >Artful Batina Creative Studios</a
           >
